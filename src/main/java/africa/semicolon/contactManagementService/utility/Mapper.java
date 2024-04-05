@@ -1,6 +1,8 @@
 package africa.semicolon.contactManagementService.utility;
 
+import africa.semicolon.contactManagementService.datas.models.Contact;
 import africa.semicolon.contactManagementService.datas.models.User;
+import africa.semicolon.contactManagementService.dtos.ContactCreationRequest;
 import africa.semicolon.contactManagementService.dtos.UserCreationRequest;
 
 import java.util.ArrayList;
@@ -26,5 +28,13 @@ public class Mapper {
         if(lists == null) lists = new ArrayList<>();
 
         return lists;
+    }
+
+    public static Contact map(ContactCreationRequest contactCreationRequest){
+        Contact newContact = new Contact();
+        newContact.setEmail(contactCreationRequest.getEmail());
+        newContact.setName(STR."\{contactCreationRequest.getFirstName()} \{contactCreationRequest.getLastName()}");
+        newContact.setPhoneNumber(contactCreationRequest.getPhoneNumber());
+        return newContact;
     }
 }

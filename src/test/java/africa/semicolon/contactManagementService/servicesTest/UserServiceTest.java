@@ -1,5 +1,6 @@
 package africa.semicolon.contactManagementService.servicesTest;
 
+import africa.semicolon.contactManagementService.datas.models.User;
 import africa.semicolon.contactManagementService.datas.repositories.UserRepository;
 import africa.semicolon.contactManagementService.dtos.UserCreationRequest;
 import africa.semicolon.contactManagementService.exception.EmptyStringException;
@@ -37,5 +38,14 @@ public class UserServiceTest {
         userCreationRequest.setPassword("Password");
         userCreationRequest.setEmail("email@email.com");
         assertThrows(EmptyStringException.class, ()-> userService.createUser(userCreationRequest));
+    }
+
+    @Test
+    public void createUser_saveContactInUser_contactIsSavedTest(){
+        UserCreationRequest userCreationRequest = new UserCreationRequest();
+        userCreationRequest.setUsername("Username");
+        userCreationRequest.setPassword("Password");
+        userCreationRequest.setEmail("email@email.com");
+        User user = userService.createUser(userCreationRequest);
     }
 }

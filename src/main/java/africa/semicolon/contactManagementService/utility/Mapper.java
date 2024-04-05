@@ -14,4 +14,8 @@ public class Mapper {
         newUser.setEmail(userCreationRequest.getEmail());
         return newUser;
     }
+
+    public static boolean checkEmptyStringUsername(String username) {
+        return username.isEmpty();
+    }
 }

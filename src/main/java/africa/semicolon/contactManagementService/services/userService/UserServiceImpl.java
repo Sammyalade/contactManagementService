@@ -11,8 +11,9 @@ import africa.semicolon.contactManagementService.services.contactService.Contact
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static africa.semicolon.contactManagementService.utility.Mapper.checkEmptyStringUsername;
-import static africa.semicolon.contactManagementService.utility.Mapper.map;
+import java.util.List;
+
+import static africa.semicolon.contactManagementService.utility.Mapper.*;
 
 
 @Service
@@ -35,7 +36,8 @@ public class UserServiceImpl implements UserService{
     public void createContact(ContactCreationRequest contactCreationRequest) {
         Contact contact = contactService.createContact(contactCreationRequest);
         User user = contactCreationRequest.getUser();
-        user.setContacts();
+        user.setContacts((List<Contact>) checkIfListIsNull(user.getContacts()));
+        user.getContacts().add(contact);
     }
 
 

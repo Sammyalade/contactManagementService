@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 @Data
-@RequiredArgsConstructor
 @Entity
 @Table(name = "group_table")
 public class Group {
@@ -15,6 +14,6 @@ public class Group {
     @Id
     private int id;
     private String name;
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Contact> contacts;
 }

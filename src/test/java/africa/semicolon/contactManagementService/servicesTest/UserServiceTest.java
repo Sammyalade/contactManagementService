@@ -52,21 +52,34 @@ public class UserServiceTest {
     }
 
     @Test
-    public void createUser_saveContactInUser_contactIsSavedTest(){
+    public void createUser_saveContact_contactIsSavedTest(){
         UserCreationRequest userCreationRequest = new UserCreationRequest();
         userCreationRequest.setUsername("Username");
         userCreationRequest.setPassword("Password");
         userCreationRequest.setEmail("email@email.com");
-        User user = userService.createUser(userCreationRequest);
+        userService.createUser(userCreationRequest);
         ContactCreationRequest contactCreationRequest = new ContactCreationRequest();
         contactCreationRequest.setFirstName("FirstName");
         contactCreationRequest.setLastName("LastName");
         contactCreationRequest.setEmail("email@email.com");
         contactCreationRequest.setPhoneNumber("1234567890");
-        Contact contact = contactService.createContact(contactCreationRequest);
-        user.setContacts((List<Contact>) checkIfListIsNull(user.getContacts()));
-        user.getContacts().add(contact);
+        contactService.createContact(contactCreationRequest);
         assertThat(userRepository.count(), is(1L));
         assertThat(contactRepository.count(), is(1L));
+    }
+
+    @Test
+    public void createUser_saveContactInUser_contactIsSavedTest(){
+        UserCreationRequest userCreationRequest = new UserCreationRequest();
+        userCreationRequest.setUsername("Username");
+        userCreationRequest.setPassword("Password");
+        userCreationRequest.setEmail("email@email.com");
+        userService.createUser(userCreationRequest);
+        ContactCreationRequest contactCreationRequest = new ContactCreationRequest();
+        contactCreationRequest.setFirstName("FirstName");
+        contactCreationRequest.setLastName("LastName");
+        contactCreationRequest.setEmail("email@email.com");
+        contactCreationRequest.setPhoneNumber("1234567890");
+        userService.createContact(contactCreationRequest);
     }
 }

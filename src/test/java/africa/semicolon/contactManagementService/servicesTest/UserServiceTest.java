@@ -74,12 +74,16 @@ public class UserServiceTest {
         userCreationRequest.setUsername("Username");
         userCreationRequest.setPassword("Password");
         userCreationRequest.setEmail("email@email.com");
-        userService.createUser(userCreationRequest);
+        User user = userService.createUser(userCreationRequest);
         ContactCreationRequest contactCreationRequest = new ContactCreationRequest();
         contactCreationRequest.setFirstName("FirstName");
         contactCreationRequest.setLastName("LastName");
         contactCreationRequest.setEmail("email@email.com");
         contactCreationRequest.setPhoneNumber("1234567890");
+        contactCreationRequest.setUser(user);
         userService.createContact(contactCreationRequest);
+        assertThat(contactRepository.count(), is(1L));
+        assertThat(userRepository.count(), is(1L));
+        assertThat(user.getContacts().size(), is(1));
     }
 }

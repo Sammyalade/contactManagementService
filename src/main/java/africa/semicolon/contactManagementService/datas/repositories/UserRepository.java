@@ -1,4 +1,7 @@
 package africa.semicolon.contactManagementService.datas.repositories;
 
-public class UserRepository {
+import africa.semicolon.contactManagementService.datas.models.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, Integer> {
 }

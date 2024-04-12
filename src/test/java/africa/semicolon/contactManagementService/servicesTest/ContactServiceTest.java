@@ -4,6 +4,7 @@ import africa.semicolon.contactManagementService.datas.models.Contact;
 import africa.semicolon.contactManagementService.datas.repositories.ContactRepository;
 import africa.semicolon.contactManagementService.dtos.ContactCreationRequest;
 import africa.semicolon.contactManagementService.dtos.ContactUpdateRequest;
+import africa.semicolon.contactManagementService.exception.ContactNotFoundException;
 import africa.semicolon.contactManagementService.services.contactService.ContactService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -169,5 +171,11 @@ public class ContactServiceTest {
     }
 
     @Test
-    public void createContact_(){}
+    public void searchForContactThatDoesNotExist_exceptionIsThrownTest(){
+        assertThatThrownBy(()->{
+            contactService.getContactById(1);
+        })
+                .isInstanceOf(ContactNotFoundException.class)
+                .hasMessageContaining("Contact not found");
+    }
 }

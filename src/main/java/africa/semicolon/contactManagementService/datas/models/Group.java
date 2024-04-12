@@ -16,6 +16,6 @@ public class Group {
     @GeneratedValue
     private int id;
     private String name;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     private List<Contact> contacts;
 }

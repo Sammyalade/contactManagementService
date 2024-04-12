@@ -8,15 +8,15 @@ import java.util.List;
 
 public interface GroupService {
 
-    Group createGroup(CreateGroupRequest request);
+    Group createGroup(String name);
 
-    Group getGroupById(Long groupId);
+    Group getGroupById(int groupId);
 
     Group updateGroup(UpdateGroupRequest request);
 
-    void deleteGroup(Long groupId);
+    void deleteGroup(int groupId);
 
-    List<Group> listGroups(ListGroupsRequest request);
+    List<Group> findAll();
 
     void addContactToGroup(AddContactToGroupRequest request);
 

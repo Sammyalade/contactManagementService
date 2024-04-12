@@ -3,11 +3,11 @@ package africa.semicolon.contactManagementService.services.contactService;
 import africa.semicolon.contactManagementService.datas.models.Contact;
 import africa.semicolon.contactManagementService.datas.repositories.ContactRepository;
 import africa.semicolon.contactManagementService.dtos.*;
+import africa.semicolon.contactManagementService.exception.ContactNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 import static africa.semicolon.contactManagementService.utility.Mapper.map;
 
@@ -25,14 +25,14 @@ public class ContactServiceImpl implements ContactService{
 
     @Override
     public Contact getContactById(int contactId) {
-        Optional<Contact> contactOptional = contactRepository.findById(contactId);
-        return contactOptional.orElse(null);
+        return contactRepository.findById(contactId)
+                .orElseThrow(() -> new ContactNotFoundException("Contact not found"));
     }
 
     @Override
     public Contact updateContact(ContactUpdateRequest request) {
         Contact contact = getContactById((int) request.getId());
-        checkForUpdate(request, contact);
+        updateContactFields(request, contact);
         contactRepository.save(contact);
         return contact;
     }
@@ -48,21 +48,11 @@ public class ContactServiceImpl implements ContactService{
     }
 
 
-    @Override
-    public void assignContactToGroup(AssignContactToGroupRequest request) {
-
-    }
-
-    @Override
-    public void removeContactFromGroup(RemoveContactFromGroupRequest request) {
-
-    }
 
 
 
 
-
-    private void checkForUpdate(ContactUpdateRequest request, Contact contact) {
+    private void updateContactFields(ContactUpdateRequest request, Contact contact) {
         if(request.getFirstName()!= null ) {
             String[] nameParts = contact.getName().split(" ");
             contact.setName(STR."\{request.getFirstName()} \{nameParts[1]}");

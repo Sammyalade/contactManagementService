@@ -9,15 +9,8 @@ public interface ContactService {
 
     Contact createContact(ContactCreationRequest contactCreationRequest);
     Contact getContactById(int contactId);
-
     Contact updateContact(ContactUpdateRequest request);
-
     void deleteContact(int contactId);
-
     List<Contact> findAll();
-
-    void assignContactToGroup(AssignContactToGroupRequest request);
-
-    void removeContactFromGroup(RemoveContactFromGroupRequest request);
 
 }

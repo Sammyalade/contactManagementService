@@ -8,6 +8,7 @@ import africa.semicolon.contactManagementService.dtos.ContactCreationRequest;
 import africa.semicolon.contactManagementService.dtos.RemoveContactFromGroupRequest;
 import africa.semicolon.contactManagementService.dtos.UpdateGroupRequest;
 import africa.semicolon.contactManagementService.exception.EmptyStringException;
+import africa.semicolon.contactManagementService.exception.GroupNotFoundException;
 import africa.semicolon.contactManagementService.services.contactService.ContactService;
 import africa.semicolon.contactManagementService.services.groupService.GroupService;
 import jakarta.transaction.Transactional;
@@ -162,6 +163,15 @@ public class GroupServiceTest {
         groupService.addContactToGroup(addContactToGroupRequest);
         List<Contact> contacts = groupService.getContactsInGroup(group.getId());
         assertThat(contacts, is(groupService.getContactsInGroup(group.getId())));
+    }
+
+    @Test
+    public void searchForGroupNotExisting_throwsExceptionTest(){
+        assertThatThrownBy(() -> {
+            groupService.getGroupById(11);
+        })
+                .isInstanceOf(GroupNotFoundException.class)
+                .hasMessageContaining("Group not found");
     }
 
 

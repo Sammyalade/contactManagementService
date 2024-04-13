@@ -2,10 +2,10 @@ package africa.semicolon.contactManagementService.services.groupService;
 
 import africa.semicolon.contactManagementService.datas.models.Contact;
 import africa.semicolon.contactManagementService.datas.models.Group;
-import africa.semicolon.contactManagementService.datas.repositories.ContactRepository;
 import africa.semicolon.contactManagementService.datas.repositories.GroupRepository;
 import africa.semicolon.contactManagementService.dtos.*;
 import africa.semicolon.contactManagementService.exception.EmptyStringException;
+import africa.semicolon.contactManagementService.exception.GroupNotFoundException;
 import africa.semicolon.contactManagementService.services.contactService.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +34,8 @@ public class GroupServiceImpl implements GroupService{
     @Override
     public Group getGroupById(int groupId) {
         Optional<Group> group = groupRepository.findById(groupId);
-        return group.orElse(null);
+        return group
+                .orElseThrow(()-> new GroupNotFoundException("Group not found"));
     }
 
     @Override
@@ -47,7 +48,7 @@ public class GroupServiceImpl implements GroupService{
 
     @Override
     public void deleteGroup(int groupId) {
-        groupRepository.deleteById(groupId);
+        groupRepository.delete(getGroupById(groupId));
     }
 
     @Override
@@ -74,11 +75,6 @@ public class GroupServiceImpl implements GroupService{
 
     @Override
     public List<Contact> getContactsInGroup(int groupId) {
-        return null;
-    }
-
-    @Override
-    public List<Group> searchGroups(SearchGroupsRequest request) {
-        return null;
+        return getGroupById(groupId).getContacts();
     }
 }

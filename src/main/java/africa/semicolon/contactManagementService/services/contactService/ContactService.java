@@ -1,7 +1,8 @@
 package africa.semicolon.contactManagementService.services.contactService;
 
 import africa.semicolon.contactManagementService.datas.models.Contact;
-import africa.semicolon.contactManagementService.dtos.*;
+import africa.semicolon.contactManagementService.dtos.requests.ContactCreationRequest;
+import africa.semicolon.contactManagementService.dtos.requests.ContactUpdateRequest;
 
 import java.util.List;
 

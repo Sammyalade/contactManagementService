@@ -13,8 +13,8 @@ public class User {
     @GeneratedValue
     private int id;
     private String username;
-    private String password;
     private String email;
+    private boolean isLocked;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Contact> contacts;
     @OneToMany(cascade = CascadeType.ALL)

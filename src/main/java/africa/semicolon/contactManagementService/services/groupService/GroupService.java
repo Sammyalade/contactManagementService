@@ -22,6 +22,6 @@ public interface GroupService {
 
     void removeContactFromGroup(RemoveContactFromGroupRequest request);
 
-    List<Contact> getContactsInGroup(Long groupId);
+    List<Contact> getContactsInGroup(int groupId);
     List<Group> searchGroups(SearchGroupsRequest request);
 }

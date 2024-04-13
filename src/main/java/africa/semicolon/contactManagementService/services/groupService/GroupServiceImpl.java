@@ -66,11 +66,14 @@ public class GroupServiceImpl implements GroupService{
 
     @Override
     public void removeContactFromGroup(RemoveContactFromGroupRequest request) {
-
+        Contact contact = contactService.getContactById(request.getContactId());
+        Group group = getGroupById(request.getGroupId());
+        group.getContacts().remove(contact);
+        groupRepository.save(group);
     }
 
     @Override
-    public List<Contact> getContactsInGroup(Long groupId) {
+    public List<Contact> getContactsInGroup(int groupId) {
         return null;
     }
 

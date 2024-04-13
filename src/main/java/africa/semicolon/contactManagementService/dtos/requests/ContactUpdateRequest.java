@@ -1,4 +1,4 @@
-package africa.semicolon.contactManagementService.dtos;
+package africa.semicolon.contactManagementService.dtos.requests;
 
 import africa.semicolon.contactManagementService.datas.models.User;
 import lombok.Data;

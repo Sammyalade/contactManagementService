@@ -2,20 +2,26 @@ package africa.semicolon.contactManagementService.services.groupService;
 
 import africa.semicolon.contactManagementService.datas.models.Contact;
 import africa.semicolon.contactManagementService.datas.models.Group;
+import africa.semicolon.contactManagementService.datas.repositories.ContactRepository;
 import africa.semicolon.contactManagementService.datas.repositories.GroupRepository;
 import africa.semicolon.contactManagementService.dtos.*;
 import africa.semicolon.contactManagementService.exception.EmptyStringException;
+import africa.semicolon.contactManagementService.services.contactService.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+import static africa.semicolon.contactManagementService.utility.Mapper.checkIfListIsNull;
+
 @Service("groupService")
 public class GroupServiceImpl implements GroupService{
 
     @Autowired
     private GroupRepository groupRepository;
+    @Autowired
+    private ContactService contactService;
     @Override
     public Group createGroup(String name) {
         if(name.isEmpty()) throw new EmptyStringException("Group name cannot be empty");
@@ -51,7 +57,11 @@ public class GroupServiceImpl implements GroupService{
 
     @Override
     public void addContactToGroup(AddContactToGroupRequest request) {
-
+        Contact contact = contactService.getContactById(request.getContactId());
+        Group group = getGroupById(request.getGroupId());
+        group.setContacts((List<Contact>) checkIfListIsNull(group.getContacts()));
+        group.getContacts().add(contact);
+        groupRepository.save(group);
     }
 
     @Override

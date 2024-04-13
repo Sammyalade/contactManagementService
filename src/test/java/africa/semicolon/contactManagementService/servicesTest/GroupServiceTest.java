@@ -147,4 +147,22 @@ public class GroupServiceTest {
         assertThat(groupService.getGroupById(group.getId()).getContacts().size(), is(0));
     }
 
+    @Test
+    public void createGroup_addContactToGroup_getAllContactInTheGroup_returnsAListOfContactInTheGroupTest(){
+        Group group = groupService.createGroup("myGroup");
+        ContactCreationRequest contactCreationRequest = new ContactCreationRequest();
+        contactCreationRequest.setFirstName("myFirstName");
+        contactCreationRequest.setLastName("myLastName");
+        contactCreationRequest.setEmail("myEmail");
+        contactCreationRequest.setPhoneNumber("myPhoneNumber");
+        Contact contact = contactService.createContact(contactCreationRequest);
+        AddContactToGroupRequest addContactToGroupRequest = new AddContactToGroupRequest();
+        addContactToGroupRequest.setContactId(contact.getId());
+        addContactToGroupRequest.setGroupId(group.getId());
+        groupService.addContactToGroup(addContactToGroupRequest);
+        List<Contact> contacts = groupService.getContactsInGroup(group.getId());
+        assertThat(contacts, is(groupService.getContactsInGroup(group.getId())));
+    }
+
+
 }

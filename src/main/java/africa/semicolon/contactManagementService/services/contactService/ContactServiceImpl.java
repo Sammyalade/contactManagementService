@@ -2,7 +2,8 @@ package africa.semicolon.contactManagementService.services.contactService;
 
 import africa.semicolon.contactManagementService.datas.models.Contact;
 import africa.semicolon.contactManagementService.datas.repositories.ContactRepository;
-import africa.semicolon.contactManagementService.dtos.*;
+import africa.semicolon.contactManagementService.dtos.requests.ContactCreationRequest;
+import africa.semicolon.contactManagementService.dtos.requests.ContactUpdateRequest;
 import africa.semicolon.contactManagementService.exception.ContactNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

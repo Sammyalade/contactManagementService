@@ -3,10 +3,10 @@ package africa.semicolon.contactManagementService.servicesTest;
 import africa.semicolon.contactManagementService.datas.models.Contact;
 import africa.semicolon.contactManagementService.datas.models.Group;
 import africa.semicolon.contactManagementService.datas.repositories.GroupRepository;
-import africa.semicolon.contactManagementService.dtos.AddContactToGroupRequest;
-import africa.semicolon.contactManagementService.dtos.ContactCreationRequest;
-import africa.semicolon.contactManagementService.dtos.RemoveContactFromGroupRequest;
-import africa.semicolon.contactManagementService.dtos.UpdateGroupRequest;
+import africa.semicolon.contactManagementService.dtos.requests.AddContactToGroupRequest;
+import africa.semicolon.contactManagementService.dtos.requests.ContactCreationRequest;
+import africa.semicolon.contactManagementService.dtos.requests.RemoveContactFromGroupRequest;
+import africa.semicolon.contactManagementService.dtos.requests.UpdateGroupRequest;
 import africa.semicolon.contactManagementService.exception.EmptyStringException;
 import africa.semicolon.contactManagementService.exception.GroupNotFoundException;
 import africa.semicolon.contactManagementService.services.contactService.ContactService;
@@ -172,6 +172,19 @@ public class GroupServiceTest {
         })
                 .isInstanceOf(GroupNotFoundException.class)
                 .hasMessageContaining("Group not found");
+    }
+
+    @Test
+    public void createGroupUpdateGroupWithEmptyString_throwsExceptionTest(){
+        Group group = groupService.createGroup("group");
+        UpdateGroupRequest updateGroupRequest = new UpdateGroupRequest();
+        updateGroupRequest.setGroupId(group.getId());
+        updateGroupRequest.setGroupName("");
+        assertThatThrownBy(() -> {
+            groupService.updateGroup(updateGroupRequest);
+        })
+                .isInstanceOf(EmptyStringException.class)
+                .hasMessageContaining("Group name cannot be empty");
     }
 
 

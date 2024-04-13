@@ -1,10 +1,16 @@
 package africa.semicolon.contactManagementService.servicesTest;
 
+import africa.semicolon.contactManagementService.datas.models.Contact;
 import africa.semicolon.contactManagementService.datas.models.Group;
 import africa.semicolon.contactManagementService.datas.repositories.GroupRepository;
+import africa.semicolon.contactManagementService.dtos.AddContactToGroupRequest;
+import africa.semicolon.contactManagementService.dtos.ContactCreationRequest;
+import africa.semicolon.contactManagementService.dtos.RemoveContactFromGroupRequest;
 import africa.semicolon.contactManagementService.dtos.UpdateGroupRequest;
 import africa.semicolon.contactManagementService.exception.EmptyStringException;
+import africa.semicolon.contactManagementService.services.contactService.ContactService;
 import africa.semicolon.contactManagementService.services.groupService.GroupService;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +23,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
+@Transactional
 public class GroupServiceTest {
 
     @Autowired
@@ -24,6 +31,9 @@ public class GroupServiceTest {
 
     @Autowired
     private GroupRepository groupRepository;
+
+    @Autowired
+    private ContactService contactService;
 
     @BeforeEach
     public void setUp() {
@@ -76,6 +86,65 @@ public class GroupServiceTest {
     }
 
     @Test
-    public void
+    public void createGroup_addContactToGroup_sizeOfContactListIsOneTest(){
+        Group group = groupService.createGroup("myGroup");
+        ContactCreationRequest contactCreationRequest = new ContactCreationRequest();
+        contactCreationRequest.setFirstName("myFirstName");
+        contactCreationRequest.setLastName("myLastName");
+        contactCreationRequest.setEmail("myEmail");
+        contactCreationRequest.setPhoneNumber("myPhoneNumber");
+        Contact contact = contactService.createContact(contactCreationRequest);
+        AddContactToGroupRequest addContactToGroupRequest = new AddContactToGroupRequest();
+        addContactToGroupRequest.setContactId(contact.getId());
+        addContactToGroupRequest.setGroupId(group.getId());
+        groupService.addContactToGroup(addContactToGroupRequest);
+        assertThat(groupService.getGroupById(group.getId()).getContacts().size(), is(1));
+    }
+
+    @Test
+    public void createGroup_addTwoContactToGroup_sizeOfContactListIsTwoTest(){
+        Group group = groupService.createGroup("myGroup");
+        ContactCreationRequest contactCreationRequest = new ContactCreationRequest();
+        contactCreationRequest.setFirstName("myFirstName");
+        contactCreationRequest.setLastName("myLastName");
+        contactCreationRequest.setEmail("myEmail");
+        contactCreationRequest.setPhoneNumber("myPhoneNumber");
+        ContactCreationRequest contactCreationRequest2 = new ContactCreationRequest();
+        contactCreationRequest2.setFirstName("myFirstName");
+        contactCreationRequest2.setLastName("myLastName");
+        contactCreationRequest2.setEmail("myEmail");
+        contactCreationRequest2.setPhoneNumber("myPhoneNumber");
+        Contact contact2 = contactService.createContact(contactCreationRequest);
+        Contact contact = contactService.createContact(contactCreationRequest);
+        AddContactToGroupRequest addContactToGroupRequest = new AddContactToGroupRequest();
+        addContactToGroupRequest.setContactId(contact.getId());
+        addContactToGroupRequest.setGroupId(group.getId());
+        AddContactToGroupRequest addContactToGroupRequest2 = new AddContactToGroupRequest();
+        addContactToGroupRequest2.setContactId(contact2.getId());
+        addContactToGroupRequest2.setGroupId(group.getId());
+        groupService.addContactToGroup(addContactToGroupRequest);
+        groupService.addContactToGroup(addContactToGroupRequest2);
+        assertThat(groupService.getGroupById(group.getId()).getContacts().size(), is(2));
+    }
+
+    @Test
+    public void createGroup_addContactToGroup_removeContactFromGroup_contactIsRemovedTest(){
+        Group group = groupService.createGroup("myGroup");
+        ContactCreationRequest contactCreationRequest = new ContactCreationRequest();
+        contactCreationRequest.setFirstName("myFirstName");
+        contactCreationRequest.setLastName("myLastName");
+        contactCreationRequest.setEmail("myEmail");
+        contactCreationRequest.setPhoneNumber("myPhoneNumber");
+        Contact contact = contactService.createContact(contactCreationRequest);
+        AddContactToGroupRequest addContactToGroupRequest = new AddContactToGroupRequest();
+        addContactToGroupRequest.setContactId(contact.getId());
+        addContactToGroupRequest.setGroupId(group.getId());
+        groupService.addContactToGroup(addContactToGroupRequest);
+        RemoveContactFromGroupRequest removeContactFromGroupRequest = new RemoveContactFromGroupRequest();
+        removeContactFromGroupRequest.setGroupId(group.getId());
+        removeContactFromGroupRequest.setContactId(contact.getId());
+        groupService.removeContactFromGroup(removeContactFromGroupRequest);
+        assertThat(groupService.getGroupById(group.getId()).getContacts().size(), is(0));
+    }
 
 }

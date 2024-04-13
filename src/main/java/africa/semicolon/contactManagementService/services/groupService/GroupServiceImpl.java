@@ -3,7 +3,9 @@ package africa.semicolon.contactManagementService.services.groupService;
 import africa.semicolon.contactManagementService.datas.models.Contact;
 import africa.semicolon.contactManagementService.datas.models.Group;
 import africa.semicolon.contactManagementService.datas.repositories.GroupRepository;
-import africa.semicolon.contactManagementService.dtos.*;
+import africa.semicolon.contactManagementService.dtos.requests.AddContactToGroupRequest;
+import africa.semicolon.contactManagementService.dtos.requests.RemoveContactFromGroupRequest;
+import africa.semicolon.contactManagementService.dtos.requests.UpdateGroupRequest;
 import africa.semicolon.contactManagementService.exception.EmptyStringException;
 import africa.semicolon.contactManagementService.exception.GroupNotFoundException;
 import africa.semicolon.contactManagementService.services.contactService.ContactService;
@@ -40,6 +42,7 @@ public class GroupServiceImpl implements GroupService{
 
     @Override
     public Group updateGroup(UpdateGroupRequest request) {
+        if(request.getGroupName().isEmpty()) throw new EmptyStringException("Group name cannot be empty");
         Group group = getGroupById(request.getGroupId());
         group.setName(request.getGroupName());
         groupRepository.save(group);

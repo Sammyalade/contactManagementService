@@ -2,7 +2,9 @@ package africa.semicolon.contactManagementService.services.groupService;
 
 import africa.semicolon.contactManagementService.datas.models.Contact;
 import africa.semicolon.contactManagementService.datas.models.Group;
-import africa.semicolon.contactManagementService.dtos.*;
+import africa.semicolon.contactManagementService.dtos.requests.AddContactToGroupRequest;
+import africa.semicolon.contactManagementService.dtos.requests.RemoveContactFromGroupRequest;
+import africa.semicolon.contactManagementService.dtos.requests.UpdateGroupRequest;
 
 import java.util.List;
 

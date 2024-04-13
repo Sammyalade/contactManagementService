@@ -10,6 +10,6 @@ public class ContactCreationRequest {
     private String lastName;
     private String email;
     private String phoneNumber;
-    private User user;
+    private int userId;
 
 }

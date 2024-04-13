@@ -1,11 +1,10 @@
 package africa.semicolon.contactManagementService.servicesTest;
 
-import africa.semicolon.contactManagementService.datas.models.Contact;
 import africa.semicolon.contactManagementService.datas.models.User;
 import africa.semicolon.contactManagementService.datas.repositories.ContactRepository;
 import africa.semicolon.contactManagementService.datas.repositories.UserRepository;
-import africa.semicolon.contactManagementService.dtos.ContactCreationRequest;
-import africa.semicolon.contactManagementService.dtos.UserCreationRequest;
+import africa.semicolon.contactManagementService.dtos.requests.ContactCreationRequest;
+import africa.semicolon.contactManagementService.dtos.requests.UserCreationRequest;
 import africa.semicolon.contactManagementService.exception.EmptyStringException;
 import africa.semicolon.contactManagementService.services.contactService.ContactService;
 import africa.semicolon.contactManagementService.services.userService.UserService;
@@ -13,9 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
-
-import static africa.semicolon.contactManagementService.utility.Mapper.checkIfListIsNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;

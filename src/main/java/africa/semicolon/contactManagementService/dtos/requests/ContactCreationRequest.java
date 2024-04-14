@@ -11,5 +11,6 @@ public class ContactCreationRequest {
     private String email;
     private String phoneNumber;
     private int userId;
+    private String groupName;
 
 }

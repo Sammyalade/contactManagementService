@@ -1,11 +1,17 @@
 package africa.semicolon.contactManagementService.utility;
 
 import africa.semicolon.contactManagementService.datas.models.Contact;
+import africa.semicolon.contactManagementService.datas.models.Group;
 import africa.semicolon.contactManagementService.datas.models.User;
+import africa.semicolon.contactManagementService.dtos.requests.AddContactToGroupRequest;
 import africa.semicolon.contactManagementService.dtos.requests.ContactCreationRequest;
 import africa.semicolon.contactManagementService.dtos.requests.UserCreationRequest;
+import africa.semicolon.contactManagementService.dtos.requests.UserUpdateRequest;
 import africa.semicolon.contactManagementService.dtos.responses.ContactCreationResponse;
+import africa.semicolon.contactManagementService.dtos.responses.GroupCreationResponse;
 import africa.semicolon.contactManagementService.dtos.responses.UserRegistrationResponse;
+import africa.semicolon.contactManagementService.dtos.responses.UserUpdateResponse;
+import africa.semicolon.contactManagementService.exception.ContactUpdateResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +21,12 @@ import static africa.semicolon.contactManagementService.utility.Utility.toLowerC
 public class Mapper {
 
     public static User map(UserCreationRequest userCreationRequest) {
-        User newUser = new User();
-        newUser.setUsername(toLowerCase(userCreationRequest.getUsername()));
-        newUser.setEmail(userCreationRequest.getEmail());
-        return newUser;
+        User user = new User();
+        user.setUsername(toLowerCase(userCreationRequest.getUsername()));
+        user.setEmail(userCreationRequest.getEmail());
+        user.setContacts((List<Contact>) checkIfListIsNull(user.getContacts()));
+        user.setGroups((List<Group>) checkIfListIsNull(user.getGroups()));
+        return user;
     }
 
     public static boolean isEmptyOrNullString(String title) {
@@ -54,5 +62,36 @@ public class Mapper {
         contactCreationResponse.setContactName(contact.getName());
         contactCreationResponse.setContactId(contact.getId());
         return contactCreationResponse;
+    }
+
+    public static UserUpdateResponse map(UserUpdateRequest userUpdateRequest, String email) {
+        UserUpdateResponse userUpdateResponse = new UserUpdateResponse();
+        userUpdateResponse.setUserId(userUpdateRequest.getUserId());
+        userUpdateResponse.setEmail(email);
+        userUpdateResponse.setUsername(userUpdateRequest.getUsername());
+        return userUpdateResponse;
+    }
+
+    public static ContactUpdateResponse map(int userId, int contactId, String name) {
+        ContactUpdateResponse contactUpdateResponse = new ContactUpdateResponse();
+        contactUpdateResponse.setUserId(userId);
+        contactUpdateResponse.setContactId(contactId);
+        contactUpdateResponse.setContactName(name);
+        return contactUpdateResponse;
+    }
+
+    public static GroupCreationResponse map(int groupId, String name, int userId) {
+        GroupCreationResponse groupCreationResponse = new GroupCreationResponse();
+        groupCreationResponse.setUserId(userId);
+        groupCreationResponse.setGroupId(groupId);
+        groupCreationResponse.setGroupName(name);
+        return groupCreationResponse;
+    }
+
+    public static AddContactToGroupRequest map(int groupId, int contactId) {
+        AddContactToGroupRequest addContactToGroupRequest = new AddContactToGroupRequest();
+        addContactToGroupRequest.setGroupId(groupId);
+        addContactToGroupRequest.setContactId(contactId);
+        return addContactToGroupRequest;
     }
 }

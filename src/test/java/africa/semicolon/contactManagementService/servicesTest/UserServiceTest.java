@@ -318,4 +318,6 @@ public class UserServiceTest {
                 .hasMessageContaining("User is not logged in");
 
     }
+
+
 }

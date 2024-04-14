@@ -24,4 +24,7 @@ public interface GroupService {
 
     void removeContactFromGroup(RemoveContactFromGroupRequest request);
 
-    List<Contact> getContactsInGroup(int groupId);}
+    List<Contact> getContactsInGroup(int groupId);
+
+    Group findByName(String name);
+}

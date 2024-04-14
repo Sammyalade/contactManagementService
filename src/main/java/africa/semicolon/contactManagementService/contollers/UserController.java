@@ -133,4 +133,24 @@ public class UserController {
             return new ResponseEntity<>(new UserApiResponse(false , e.getMessage()), BAD_REQUEST);
         }
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody UserLoginRequest userLoginRequest) {
+        try {
+            userService.loginUser(userLoginRequest);
+            return new ResponseEntity<>(new UserApiResponse(true, "Login successful"), CREATED);
+        } catch (ContactManagementServiceException e){
+            return new ResponseEntity<>(new UserApiResponse(false , e.getMessage()), BAD_REQUEST);
+        }
+    }
+
+    @PatchMapping("/logout/{userId}")
+    public ResponseEntity<?> logout(@PathVariable("userId") int userId) {
+        try{
+            userService.logoutUser(userId);
+            return new ResponseEntity<>(new UserApiResponse(true, "Logout successful"), CREATED);
+        } catch (ContactManagementServiceException e){
+            return new ResponseEntity<>(new UserApiResponse(false , e.getMessage()), BAD_REQUEST);
+        }
+    }
 }

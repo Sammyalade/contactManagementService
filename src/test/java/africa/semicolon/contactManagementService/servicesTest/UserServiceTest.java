@@ -47,7 +47,6 @@ public class UserServiceTest {
     public void createUser_saveUser_numberOfUserIsOneTest(){
         UserCreationRequest userCreationRequest = new UserCreationRequest();
         userCreationRequest.setUsername("Username");
-        userCreationRequest.setPassword("Password");
         userCreationRequest.setEmail("email@email.com");
         userService.registerUser(userCreationRequest);
         assertThat(userRepository.count(), is(1L));
@@ -57,7 +56,6 @@ public class UserServiceTest {
     public void createUserWithEmptyString_throwsEmptyStringExceptionTest(){
         UserCreationRequest userCreationRequest = new UserCreationRequest();
         userCreationRequest.setUsername("");
-        userCreationRequest.setPassword("Password");
         userCreationRequest.setEmail("email@email.com");
         assertThrows(EmptyStringException.class, ()-> userService.registerUser(userCreationRequest));
     }
@@ -66,7 +64,6 @@ public class UserServiceTest {
     public void createUser_saveContact_contactIsSavedTest(){
         UserCreationRequest userCreationRequest = new UserCreationRequest();
         userCreationRequest.setUsername("Username");
-        userCreationRequest.setPassword("Password");
         userCreationRequest.setEmail("email@email.com");
         userService.registerUser(userCreationRequest);
         ContactCreationRequest contactCreationRequest = new ContactCreationRequest();
@@ -83,7 +80,6 @@ public class UserServiceTest {
     public void createUser_saveContactInUser_contactIsSavedTest(){
         UserCreationRequest userCreationRequest = new UserCreationRequest();
         userCreationRequest.setUsername("Username");
-        userCreationRequest.setPassword("Password");
         userCreationRequest.setEmail("email@email.com");
         UserRegistrationResponse user = userService.registerUser(userCreationRequest);
         ContactCreationRequest contactCreationRequest = new ContactCreationRequest();
@@ -103,7 +99,6 @@ public class UserServiceTest {
     public void createUser_saveContactInGroupAndUser_contactIsSavedTest(){
         UserCreationRequest userCreationRequest = new UserCreationRequest();
         userCreationRequest.setUsername("Username");
-        userCreationRequest.setPassword("Password");
         userCreationRequest.setEmail("email@email.com");
         UserRegistrationResponse user = userService.registerUser(userCreationRequest);
         ContactCreationRequest contactCreationRequest = new ContactCreationRequest();
@@ -122,7 +117,6 @@ public class UserServiceTest {
     public void createUser_createGroupWithNull_throwsExceptionTest(){
         UserCreationRequest userCreationRequest = new UserCreationRequest();
         userCreationRequest.setUsername("Username");
-        userCreationRequest.setPassword("Password");
         userCreationRequest.setEmail("email@email.com");
         UserRegistrationResponse user = userService.registerUser(userCreationRequest);
         ContactCreationRequest contactCreationRequest = new ContactCreationRequest();
@@ -142,7 +136,6 @@ public class UserServiceTest {
     public void createUser_createGroupWithEmptyString_throwsExceptionTest(){
         UserCreationRequest userCreationRequest = new UserCreationRequest();
         userCreationRequest.setUsername("Username");
-        userCreationRequest.setPassword("Password");
         userCreationRequest.setEmail("email@email.com");
         UserRegistrationResponse user = userService.registerUser(userCreationRequest);
         ContactCreationRequest contactCreationRequest = new ContactCreationRequest();
@@ -163,7 +156,6 @@ public class UserServiceTest {
     public void createUser_createGroup_createContactLaterAndAddToExistingGroup_contactIsSavedTest(){
         UserCreationRequest userCreationRequest = new UserCreationRequest();
         userCreationRequest.setUsername("Username");
-        userCreationRequest.setPassword("Password");
         userCreationRequest.setEmail("email@email.com");
         UserRegistrationResponse user = userService.registerUser(userCreationRequest);
         GroupCreationRequest groupCreationRequest = new GroupCreationRequest();
@@ -185,7 +177,6 @@ public class UserServiceTest {
     public void createUser_loginUser_userIsLoggedInTest(){
         UserCreationRequest userCreationRequest = new UserCreationRequest();
         userCreationRequest.setUsername("Username");
-        userCreationRequest.setPassword("Password");
         userCreationRequest.setEmail("email@email.com");
         UserRegistrationResponse user = userService.registerUser(userCreationRequest);
         UserLoginRequest userLoginRequest = new UserLoginRequest();
@@ -200,7 +191,6 @@ public class UserServiceTest {
     public void createUser_loginUser_logoutUser_userIsLoggedOutTest(){
         UserCreationRequest userCreationRequest = new UserCreationRequest();
         userCreationRequest.setUsername("Username");
-        userCreationRequest.setPassword("Password");
         userCreationRequest.setEmail("email@email.com");
         UserRegistrationResponse user = userService.registerUser(userCreationRequest);
         UserLoginRequest userLoginRequest = new UserLoginRequest();
@@ -214,7 +204,6 @@ public class UserServiceTest {
     public void createUser_logoutUser_createContact_throwExceptionTest(){
         UserCreationRequest userCreationRequest = new UserCreationRequest();
         userCreationRequest.setUsername("Username");
-        userCreationRequest.setPassword("Password");
         userCreationRequest.setEmail("email@email.com");
         UserRegistrationResponse user = userService.registerUser(userCreationRequest);
         userService.logoutUser(user.getUserId());
@@ -236,7 +225,6 @@ public class UserServiceTest {
     public void createUser_logoutUser_createGroup_throwsExceptionTest(){
         UserCreationRequest userCreationRequest = new UserCreationRequest();
         userCreationRequest.setUsername("Username");
-        userCreationRequest.setPassword("Password");
         userCreationRequest.setEmail("email@email.com");
         UserRegistrationResponse user = userService.registerUser(userCreationRequest);
         userService.logoutUser(user.getUserId());
@@ -254,7 +242,6 @@ public class UserServiceTest {
     public void createUser_logoutUser_updateContact_throwException(){
         UserCreationRequest userCreationRequest = new UserCreationRequest();
         userCreationRequest.setUsername("Username");
-        userCreationRequest.setPassword("Password");
         userCreationRequest.setEmail("email@email.com");
         UserRegistrationResponse user = userService.registerUser(userCreationRequest);
         ContactCreationRequest contactCreationRequest = new ContactCreationRequest();
@@ -283,7 +270,6 @@ public class UserServiceTest {
     public void createUser_logoutUser_createGroup_throwException(){
         UserCreationRequest userCreationRequest = new UserCreationRequest();
         userCreationRequest.setUsername("Username");
-        userCreationRequest.setPassword("Password");
         userCreationRequest.setEmail("email@email.com");
         UserRegistrationResponse user = userService.registerUser(userCreationRequest);
         GroupCreationRequest groupCreationRequest = new GroupCreationRequest();
@@ -302,7 +288,6 @@ public class UserServiceTest {
     public void createUser_createGroup_logoutUser_updateGroup_throwException(){
         UserCreationRequest userCreationRequest = new UserCreationRequest();
         userCreationRequest.setUsername("Username");
-        userCreationRequest.setPassword("Password");
         userCreationRequest.setEmail("email@email.com");
         UserRegistrationResponse user = userService.registerUser(userCreationRequest);
         GroupCreationRequest groupCreationRequest = new GroupCreationRequest();

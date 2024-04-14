@@ -72,7 +72,7 @@ public class ContactServiceTest {
         contactCreationRequest.setPhoneNumber("1234567890");
         Contact contact = contactService.createContact(contactCreationRequest);
         ContactUpdateRequest contactUpdateRequest = new ContactUpdateRequest();
-        contactUpdateRequest.setId(contact.getId());
+        contactUpdateRequest.setContactId(contact.getId());
         contactUpdateRequest.setFirstName("Kim");
         contactUpdateRequest.setLastName("Candie");
         contactUpdateRequest.setEmail("kim@doe.com");
@@ -89,7 +89,7 @@ public class ContactServiceTest {
         contactCreationRequest.setPhoneNumber("1234567890");
         Contact contact = contactService.createContact(contactCreationRequest);
         ContactUpdateRequest contactUpdateRequest = new ContactUpdateRequest();
-        contactUpdateRequest.setId(contact.getId());
+        contactUpdateRequest.setContactId(contact.getId());
         contactUpdateRequest.setFirstName("Kim");
         contactService.updateContact(contactUpdateRequest);
         assertThat(contactService.getContactById(contact.getId()).getName(), is("Kim Doe"));
@@ -104,7 +104,7 @@ public class ContactServiceTest {
         contactCreationRequest.setPhoneNumber("1234567890");
         Contact contact = contactService.createContact(contactCreationRequest);
         ContactUpdateRequest contactUpdateRequest = new ContactUpdateRequest();
-        contactUpdateRequest.setId(contact.getId());
+        contactUpdateRequest.setContactId(contact.getId());
         contactUpdateRequest.setLastName("Gu");
         contactService.updateContact(contactUpdateRequest);
         assertThat(contactService.getContactById(contact.getId()).getName(), is("John Gu"));
@@ -119,7 +119,7 @@ public class ContactServiceTest {
         contactCreationRequest.setPhoneNumber("1234567890");
         Contact contact = contactService.createContact(contactCreationRequest);
         ContactUpdateRequest contactUpdateRequest = new ContactUpdateRequest();
-        contactUpdateRequest.setId(contact.getId());
+        contactUpdateRequest.setContactId(contact.getId());
         contactUpdateRequest.setEmail("johnDoe@contact.com");
         contactService.updateContact(contactUpdateRequest);
         assertThat(contactService.getContactById(contact.getId()).getEmail(), is("johnDoe@contact.com"));
@@ -134,7 +134,7 @@ public class ContactServiceTest {
         contactCreationRequest.setPhoneNumber("1234567890");
         Contact contact = contactService.createContact(contactCreationRequest);
         ContactUpdateRequest contactUpdateRequest = new ContactUpdateRequest();
-        contactUpdateRequest.setId(contact.getId());
+        contactUpdateRequest.setContactId(contact.getId());
         contactUpdateRequest.setPhoneNumber("09012345678");
         contactService.updateContact(contactUpdateRequest);
         assertThat(contactService.getContactById(contact.getId()).getPhoneNumber(), is("09012345678"));

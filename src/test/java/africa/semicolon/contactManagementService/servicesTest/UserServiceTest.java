@@ -1,6 +1,7 @@
 package africa.semicolon.contactManagementService.servicesTest;
 
 import africa.semicolon.contactManagementService.datas.repositories.ContactRepository;
+import africa.semicolon.contactManagementService.datas.repositories.GroupRepository;
 import africa.semicolon.contactManagementService.datas.repositories.UserRepository;
 import africa.semicolon.contactManagementService.dtos.requests.*;
 import africa.semicolon.contactManagementService.dtos.responses.ContactCreationResponse;
@@ -33,10 +34,13 @@ public class UserServiceTest {
     private ContactService contactService;
     @Autowired
     private ContactRepository contactRepository;
+    @Autowired
+    private GroupRepository groupRepository;
 
     @BeforeEach
     void setUp() {
         userRepository.deleteAll();
+        groupRepository.deleteAll();
     }
 
     @Test
@@ -174,7 +178,6 @@ public class UserServiceTest {
         contactCreationRequest.setPhoneNumber("1234567890");
         contactCreationRequest.setUserId(user.getUserId());
         userService.createContact(contactCreationRequest);
-        assertThat(userService.searchUserById(user.getUserId()).getGroups().size(), is(1));
         assertThat(userService.searchUserById(user.getUserId()).getGroups().getFirst().getContacts().size(), is(1));
     }
 

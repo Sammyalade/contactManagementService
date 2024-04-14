@@ -131,6 +131,7 @@ public class UserServiceImpl implements UserService{
         if (!user.isLocked()) {
             Optional<Contact> contactOptional = Optional.ofNullable(contactService.getContactById(contactDeleteRequest.getContactId()));
             if (contactOptional.isPresent()) {
+                user.getContacts().remove(contactOptional.get());
                 contactService.deleteContact(contactDeleteRequest.getContactId());
             } else {
                 throw new ContactNotFoundException("Contact not found");
@@ -164,9 +165,8 @@ public class UserServiceImpl implements UserService{
         User user = searchUserById(updateGroupRequest.getUserId());
         if(!user.isLocked()) {
             Group group = groupService.getGroupById(updateGroupRequest.getGroupId());
-            if (user.getGroups().contains(group)) {
-                groupService.updateGroup(updateGroupRequest);
-            } else throw new GroupNotFoundException("Group not found");
+            if (user.getGroups().contains(group)) { groupService.updateGroup(updateGroupRequest); }
+            else { throw new GroupNotFoundException("Group not found"); }
         }
         else throw new UserLockedException("User is not logged in");
    }
@@ -177,6 +177,7 @@ public class UserServiceImpl implements UserService{
         if (!user.isLocked()) {
             Group group = groupService.getGroupById(groupDeleteRequest.getGroupId());
             if (searchUserById(groupDeleteRequest.getUserId()).getGroups().contains(group)) {
+                user.getGroups().remove(group);
                 groupService.deleteGroup(group.getId());
             } else throw new GroupNotFoundException("Group not found");
         }

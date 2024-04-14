@@ -37,7 +37,7 @@ public class UserController {
     @PostMapping("/updateUser")
     public ResponseEntity<?> updateUser(@RequestBody UserUpdateRequest userUpdateRequest) {
         try {
-            UserUpdateResponse userUpdateResponse = new UserUpdateResponse();
+            UserUpdateResponse userUpdateResponse = userService.updateUser(userUpdateRequest);
             return new ResponseEntity<>(new UserApiResponse(true, userUpdateResponse), CREATED);
         } catch (ContactManagementServiceException e){
             return new ResponseEntity<>(new UserApiResponse(false , e.getMessage()), BAD_REQUEST);
@@ -84,7 +84,7 @@ public class UserController {
         }
     }
 
-    @PatchMapping("/findAllContact/{userId}")
+    @GetMapping("/findAllContact/{userId}")
     public ResponseEntity<?> findAllContact(@PathVariable("userId") int userId) {
         try {
             List<Contact> contacts = userService.findAllContact(userId);
@@ -105,7 +105,7 @@ public class UserController {
     }
 
     @PostMapping("/updateGroup")
-    public ResponseEntity<?> updateGroup(UpdateGroupRequest updateGroupRequest) {
+    public ResponseEntity<?> updateGroup(@RequestBody UpdateGroupRequest updateGroupRequest) {
         try{
             userService.updateGroup(updateGroupRequest);
             return new ResponseEntity<>(new UserApiResponse(true, "Group Update Successfully"), CREATED);
@@ -124,7 +124,7 @@ public class UserController {
         }
     }
 
-    @PatchMapping("/findAllGroup/{userId}")
+    @GetMapping("/findAllGroup/{userId}")
     public ResponseEntity<?> findAllGroup(@PathVariable("userId") int userId){
         try{
             List<Group> groups = userService.findAllGroup(userId);

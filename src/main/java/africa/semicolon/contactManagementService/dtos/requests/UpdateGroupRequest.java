@@ -7,4 +7,5 @@ public class UpdateGroupRequest {
 
     private int groupId;
     private String groupName;
+    private int userId;
 }

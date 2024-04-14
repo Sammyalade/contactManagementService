@@ -29,6 +29,7 @@ public class GroupServiceImpl implements GroupService{
         if(name.isEmpty()) throw new EmptyStringException("Group name cannot be empty");
         Group group = new Group();
         group.setName(name);
+        group.setContacts((List<Contact>) checkIfListIsNull(group.getContacts()));
         groupRepository.save(group);
         return group;
     }
@@ -79,5 +80,10 @@ public class GroupServiceImpl implements GroupService{
     @Override
     public List<Contact> getContactsInGroup(int groupId) {
         return getGroupById(groupId).getContacts();
+    }
+
+    @Override
+    public Group findByName(String name) {
+        return groupRepository.findByName(name);
     }
 }

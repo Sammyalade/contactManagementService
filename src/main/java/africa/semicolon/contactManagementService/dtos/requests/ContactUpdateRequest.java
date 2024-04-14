@@ -6,10 +6,10 @@ import lombok.Data;
 @Data
 public class ContactUpdateRequest {
 
-    private long id;
+    private int contactId;
     private String firstName;
     private String lastName;
     private String email;
     private String phoneNumber;
-    private User user;
+    private int userId;
 }
